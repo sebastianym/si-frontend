@@ -5,7 +5,7 @@ import { Link} from 'next-view-transitions';
 import React from 'react'
 import { useFormState } from 'react-dom';
 import { ZodErrors } from '../custom/ZodErrors';
-import { loginUserAction } from '@/data/actions/auth-actions';
+import { loginUserAction } from '@/data/actions/auth/loginUserAction';
 
 const INITIAL_STATE = {
 	zodErrors: null,

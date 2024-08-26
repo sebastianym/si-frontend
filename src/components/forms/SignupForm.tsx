@@ -1,6 +1,5 @@
 "use client";
 
-import { registerUserAction } from '@/data/actions/auth-actions';
 import { Button, Input } from '@nextui-org/react';
 import { Link } from 'next-view-transitions';
 import React, { useState } from 'react'
@@ -8,6 +7,7 @@ import { useFormState } from "react-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { ZodErrors } from '../custom/ZodErrors';
 import { StrapiErrors } from '../custom/StrapiErrors';
+import { registerUserAction } from '@/data/actions/auth/registerUserAction';
 
 const INITIAL_STATE = {
 	data: null,
@@ -16,7 +16,6 @@ const INITIAL_STATE = {
 export default function SignUpForm() {
 
 	const [formState, formAction] = useFormState(registerUserAction,INITIAL_STATE);
-	const [loading, setLoading] = useState(false);
 
 	return (
 		<div className='md:p-20 max-md:p-10 min-h-screen flex justify-center items-center bg-gray-200'>
