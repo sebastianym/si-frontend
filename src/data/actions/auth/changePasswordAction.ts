@@ -1,3 +1,5 @@
+"use server";
+
 import { changePasswordService } from "@/data/services/auth/changePasswordService";
 import { schemaChangePassword } from "@/lib/schemas/auth/schemaChangePassword";
 
