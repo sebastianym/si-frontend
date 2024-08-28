@@ -5,6 +5,6 @@ export const getStrapiURL = () => {
 	}
 
 	if (process.env.NODE_ENV === 'development') {
-		return 'http://localhost:1337';
+		return 'http://localhost:1337/';
 	}
 }

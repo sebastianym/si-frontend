@@ -8,7 +8,7 @@ interface LoginUserProps {
 const baseUrl = getStrapiURL();
 
 export async function loginUserService(userData: LoginUserProps) {
-	const url = new URL("/api/auth/local", baseUrl);
+	const url = new URL("/api/custom-auth", baseUrl);
 
 	try {
 		const response = await fetch(url, {
@@ -19,7 +19,6 @@ export async function loginUserService(userData: LoginUserProps) {
 			body: JSON.stringify({ ...userData }),
 			cache: "no-cache",
 		});
-
 		return response.json();
 	} catch (error) {
 		console.error("Login Service Error:", error);

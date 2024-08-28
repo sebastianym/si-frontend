@@ -2,9 +2,8 @@ interface StrapiErrorsProps {
 	message: string | null;
 	name: string;
 	status: string | null;
-  }
-  
-  export function StrapiErrors( { error }: { readonly error: StrapiErrorsProps }) {
-	if (!error?.message) return null;
-	return <div className="text-pink-500 text-md italic py-2">{error.message}</div>;
-  }
+}
+
+export function StrapiErrors({ error }: { error:string }) {
+	return <div className="text-red-500 text-md font-semibold py-3">{error}</div>;
+}
