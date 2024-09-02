@@ -1,57 +1,41 @@
+import { Image } from "./Image";
+import { Meta } from "./Meta";
+import { ResourceTypes } from "./ResourceType";
+import { Schedule } from "./Schedule";
+
+export interface UnitsMinimalResponse {
+    data: UnitMinimal[];
+    meta: Meta;
+}
+
 export interface Unit {
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+    description: string;
+    minimumLoanTime: number;
+    is_active: boolean;
+    schedule: Schedule[];
+    image: Image;
+    resource_types: ResourceTypes[];
+    slug: string;
+    id: number;
+}
+
+export interface UnitMinimal {
     id: number;
     attributes: {
-        createdAt: string;
-        updatedAt: string;
         name: string;
-        description: string;
-        minimumLoanTime: number;
         is_active: boolean;
-        schedule: Array<{
-            id: number;
-            dayOfWeek: number;
-            startTime: string;
-            endTime: string;
-        }>;
+        slug: string;
         image: {
             data: {
-                id: number;
                 attributes: {
-                    name: string;
-                    alternativeText: string | null;
-                    caption: string | null;
-                    width: number;
-                    height: number;
-                    formats: {
-                        small: ImageFormat;
-                        medium: ImageFormat;
-                        thumbnail: ImageFormat;
-                    };
-                    hash: string;
-                    ext: string;
-                    mime: string;
-                    size: number;
                     url: string;
-                    previewUrl: string | null;
-                    provider: string;
-                    provider_metadata: any | null;
-                    createdAt: string;
-                    updatedAt: string;
+                    name: string;
                 };
             };
         };
     };
-}
-
-interface ImageFormat {
-    ext: string;
-    url: string;
-    hash: string;
-    mime: string;
-    name: string;
-    path: string | null;
-    size: number;
-    width: number;
-    height: number;
-    sizeInBytes: number;
+    meta: Meta;
 }

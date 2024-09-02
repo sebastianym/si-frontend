@@ -21,7 +21,7 @@ export default function SignInForm() {
 	const [formState, formAction] = useFormState(loginUserAction, INITIAL_STATE);
 
 	return (
-		<div className='md:p-20 max-md:p-10 min-h-screen flex justify-center items-center bg-gray-200'>
+		<div className='sm:p-20 sm:min-h-screen sm:flex sm:justify-center sm:items-center sm:bg-gray-200'>
 			<div className='w-4/6 max-xl:w-full container'>
 				<div className='w-full flex flex-wrap bg-white rounded-2xl'>
 					<div className="lg:w-1/2 transition-all lg:h-auto w-full h-52 relative lg:rounded-l-2xl max-lg:rounded-xl lg:order-1 order-2 max-lg:mt-5 max-sm:hidden">
@@ -41,10 +41,10 @@ export default function SignInForm() {
 						<p className='mb-8 text-bg-black max-xl:text-justify text-black/80'>A continuación ingresa los datos requeridos para acceder con tu perfil al dashboard de clientes.</p>
 						<form action={formAction}>
 							<label htmlFor="email">
-								<p className='text-black/80 font-medium'>Correo electrónico <span className='text-black/80 font-medium text-sm select-none'></span></p>
+								<p className='text-black/80 font-medium'>Correo electrónico o usuario<span className='text-black/80 font-medium text-sm select-none'></span></p>
 								<ZodErrors error={formState?.zodErrors?.identifier} />
 							</label>
-							<Input type="email" radius='sm' id="identifier" name="identifier" placeholder='Ingresa tu email aquí' size='lg' className='mt-2' />
+							<Input type="text" radius='sm' id="identifier" name="identifier" placeholder='Ingresa tu email o usuario aquí' size='lg' className='mt-2' />
 							<br />
 							<label htmlFor="password">
 								<p className='text-black/80 font-medium'>Contraseña <span className='text-black/80 font-medium text-sm select-none'></span></p>

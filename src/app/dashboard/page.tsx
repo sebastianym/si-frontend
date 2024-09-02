@@ -1,18 +1,20 @@
 "use client";
 
 import getUnitsAction from "@/data/actions/units/getUnitsAction";
-import { Unit } from "@/lib/types/Unit";
+import { UnitMinimal } from "@/lib/types/Unit";
 import { Button } from "@nextui-org/react";
+import { Link } from "next-view-transitions";
 import { useEffect, useState } from "react";
+import { LuLoader2 } from "react-icons/lu";
 
 export default function DashboardPage() {
 
-	const [units, setUnits] = useState<Unit[] | null>(null);
+	const [units, setUnits] = useState<UnitMinimal[] | null>(null);
 
 	useEffect(() => {
 		const fetchUnits = async () => {
 			const unitsObtained = await getUnitsAction();
-			setUnits(unitsObtained);
+			setUnits(unitsObtained.data);
 		}
 		fetchUnits();
 	}, []);
@@ -66,29 +68,58 @@ export default function DashboardPage() {
 				</div>
 			</div>
 
-			{units && units.length > 0 && (
-				<div className="max-md:mx-10 transition-all">
-					<h2 className="text-2xl font-semibold mt-10 mb-6">Unidades disponibles</h2>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-						{units?.map((unit) => (
-							<div className="flex min-h-[250px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-end px-10 pb-10 hover:translate-x-0.5 hover:-translate-y-0.5 transition-all"
-								key={unit.id}
-								style={{
-									backgroundSize: "cover",
-									backgroundRepeat: "no-repeat",
-									backgroundPosition: "center",
-									backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), url(${unit.attributes.image.data.attributes.url})`,
-									borderRadius: "20px",
-								}}>
-								<div>
-									<p className="text-tiny text-white/60 uppercase font-bold">Unidad destacada</p>
-									<h4 className="text-white font-medium text-large">{unit.attributes.name}</h4>
+			<div>
+				<h2 className="text-2xl font-semibold mt-10 mb-6">Unidades disponibles</h2>
+				{!units ? (
+					// Mostrar el estado de carga hasta que 'units' exista
+					<div className="max-md:mx-10 transition-all animate-pulse">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+							<div className="flex border rounded-3xl min-h-[250px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center px-10 hover:translate-x-0.5 hover:-translate-y-0.5 transition-all">
+								<LuLoader2 size={26} className="mr-2 text-black/50 animate-spin" />
+								<p className="text-black/80">Cargando unidades...</p>
+							</div>
+						</div>
+					</div>
+				) : (
+					// Filtrar las unidades activas
+					(() => {
+						const activeUnits = units.filter((unit) => unit.attributes.is_active);
+
+						return activeUnits.length > 0 ? (
+							// Mostrar unidades disponibles que están activas
+							<div className="max-md:mx-10 transition-all">
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+									{activeUnits.map((unit) => (
+										<Link
+											href={`/dashboard/reservar/unidad/${unit.attributes.slug}`}
+											className="flex min-h-[250px] flex-col gap-6 bg-cover bg-center bg-no-repeat items-start justify-end px-10 pb-10 hover:translate-x-0.5 hover:-translate-y-0.5 transition-all"
+											key={unit.id}
+											style={{
+												backgroundSize: "cover",
+												backgroundRepeat: "no-repeat",
+												backgroundPosition: "center",
+												backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%), url(${unit.attributes.image.data.attributes.url})`,
+												borderRadius: "24px",
+											}}
+										>
+											<div>
+												<p className="text-tiny text-white/60 uppercase font-bold">Unidad destacada</p>
+												<h4 className="text-white font-medium text-large">{unit.attributes.name}</h4>
+											</div>
+										</Link>
+									))}
 								</div>
 							</div>
-						))}
-					</div>
-				</div>
-			)}
+						) : (
+							// Mostrar mensaje si no hay unidades activas disponibles
+							<div className="flex border rounded-3xl min-h-[250px] flex-col gap-1 bg-cover bg-center bg-no-repeat items-center justify-center px-10 hover:translate-x-0.5 hover:-translate-y-0.5 transition-all">
+								<p className="text-black/80">No hay unidades disponibles en este momento.</p>
+								<p>Si crees que se trata de un error, comunícate con un empleado del establecimiento</p>
+							</div>
+						);
+					})()
+				)}
+			</div>
 		</div>
 	);
 }

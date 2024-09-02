@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body>
 				<ViewTransitions>
 					<Providers>
-						<IdleTimer timeout={30000} />
+						<IdleTimer timeout={300000} />
 						{children}
 					</Providers>
 				</ViewTransitions>
