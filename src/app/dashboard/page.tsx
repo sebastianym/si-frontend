@@ -10,6 +10,7 @@ import { LuLoader2 } from "react-icons/lu";
 export default function DashboardPage() {
 
 	const [units, setUnits] = useState<UnitMinimal[] | null>(null);
+	const [search, setSearch] = useState<string>("");
 
 	useEffect(() => {
 		const fetchUnits = async () => {
@@ -57,11 +58,14 @@ export default function DashboardPage() {
 								</svg>
 							</div>
 							<input
+								onChange={(e) => setSearch(e.target.value)}
 								placeholder="Salones, auditorios, laboratorios, equipos, etc."
 								className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111714] focus:outline-0 focus:ring-0 border border-[#dce5df] bg-white focus:border-[#dce5df] h-full placeholder:text-[#648771] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
 							/>
 							<div className="flex items-center justify-center rounded-r-xl border-l-0 border border-[#dce5df] bg-white pr-[7px]">
-								<Button size="md" radius="sm" color="primary">Buscar</Button>
+								<Link href={`/dashboard/reservar/buscador/${search}`}>
+									<Button size="md" radius="sm" color="primary">Buscar</Button>
+								</Link>
 							</div>
 						</div>
 					</label>
