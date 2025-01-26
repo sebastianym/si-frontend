@@ -16,7 +16,7 @@ const IdleTimer = ({ timeout = 300000 }: { timeout?: number }) => {
 
         timer.current = setTimeout( async() => {
 
-            const informUser = await responseAlert("Estas inactivo", "¿Deseas seguir conectado?", "Seguir conectado", "Cerrar sesión");
+            const informUser = await responseAlert("Estas inactivo", "¿Deseas seguir conectado?", "Seguir conectado", "Cerrar sesión", true);
 
             if (informUser) {
                 resetTimer();

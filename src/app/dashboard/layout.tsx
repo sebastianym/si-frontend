@@ -58,7 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 						<div className="flex items-center gap-9">
 							<Link className="text-[#111418] text-sm font-medium leading-normal" href="/dashboard">Dashboard</Link>
 							<a className="text-[#111418] text-sm font-medium leading-normal" href="#">Reservar</a>
-							<a className="text-[#111418] text-sm font-medium leading-normal" href="#">Mis reservaciones</a>
+							<a className="text-[#111418] text-sm font-medium leading-normal" href="/dashboard/mis-reservaciones">Mis reservaciones</a>
 							<Link className="text-[#111418] text-sm font-medium leading-normal" href="/dashboard/perfil">Perfil</Link>
 						</div>
 						<div className="flex gap-2">
@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 									</a>
 								</li>
 								<li>
-									<a href="#" className="flex items-center p-2 rounded-lg text-black/60 hover:bg-gray/10">
+									<a href="/dashboard/mis-reservaciones" className="flex items-center p-2 rounded-lg text-black/60 hover:bg-gray/10">
 										<IoIosCheckboxOutline className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-black/60" />
 										<span className="ms-4 whitespace-nowrap">Mis reservas</span>
 									</a>
