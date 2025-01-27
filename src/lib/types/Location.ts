@@ -1,4 +1,5 @@
 export interface Location {
+    data: any;
     id: number;
     faculty: string;
     location_name: string;

@@ -1,8 +1,6 @@
 "use client";
 
 import { Resource } from "@/lib/types/Resource";
-import { Button, Chip } from "@nextui-org/react";
-import { IoMdCheckmark } from "react-icons/io";
 import { IoLocationSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +8,7 @@ type ResultsProps = {
   results: Resource[] | null;
 };
 
-export function Results({ results }: ResultsProps) {
+export function ResultsSearch({ results }: ResultsProps) {
   const router = useRouter();
 
   if (results && results.length > 0) {
@@ -23,14 +21,14 @@ export function Results({ results }: ResultsProps) {
             onClick={() => console.log("item pressed")}
           >
             <div className="overflow-visible p-0 relative">
-              {resource.image && resource.image.url ? (
+              {resource.attributes.image.data.attributes.url ? (
                 <div
                   className="w-full h-[180px]"
                   style={{
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
-                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(${resource.image.url})`,
+                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url(${resource.attributes?.image?.data?.attributes?.url})`,
                     borderRadius: "20px 20px 0 0",
                   }}
                 ></div>
@@ -42,12 +40,19 @@ export function Results({ results }: ResultsProps) {
 
               <div className="flex items-center gap-x-1 absolute bg-blue-500 text-white px-3 text-sm py-0.5 rounded-md top-4 right-4">
                 <IoLocationSharp />
-                <p>Sede {resource.location.location_name}</p>
+                <p>
+                  Sede{" "}
+                  {resource.attributes.location.data.attributes.location_name}
+                </p>
               </div>
 
               <div className="p-5 pb-3">
-                <p className="text-xl font-semibold mb-1">{resource.name}</p>
-                <p className="text-sm mb-1">{resource.description}</p>
+                <p className="text-xl font-semibold mb-1">
+                  {resource.attributes.name}
+                </p>
+                <p className="text-sm mb-1">
+                  {resource.attributes.description}{" "}
+                </p>
               </div>
             </div>
 
@@ -55,7 +60,9 @@ export function Results({ results }: ResultsProps) {
               <button
                 className="w-full border-2 rounded-lg py-2 bg-gray-200"
                 onClick={() =>
-                  router.push(`/dashboard/reservar/reservar/${resource.slug}`)
+                  router.push(
+                    `/dashboard/reservar/reservar/${resource.attributes.slug}`
+                  )
                 }
               >
                 Reservar

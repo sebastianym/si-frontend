@@ -8,6 +8,7 @@ export interface ResourcesResponse {
 }
 
 export interface Resource {
+    attributes: any;
     id: number;
     identifier: string;
     name: string;
