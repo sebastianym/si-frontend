@@ -19,4 +19,14 @@ export interface Resource {
     slug: string;
     image: Image;
     location: Location;
+    resource_type: {
+        id: number;
+        name: string;
+        description: string;
+        identifier: string;
+        createdAt: string;
+        updatedAt: string;
+        is_active: boolean;
+        slug: string;
+    };
 }

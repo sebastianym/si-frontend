@@ -11,12 +11,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { format, set } from "date-fns";
+import { es, sl } from "date-fns/locale";
 import { responseAlert } from "@/lib/utils/alerts/responseAlert";
 import getResourceSlugAction from "@/data/actions/resources/getResourceSlugAction";
 import { Resource } from "@/lib/types/Resource";
 import { LuLoader2 } from "react-icons/lu";
+import getResourceTypeAction from "@/data/actions/resources/getResourceTypeAction";
+import { postReservationService } from "@/data/services/reservations/postReservationService";
+import { useRouter } from "next/navigation";
+import { defaultAlert } from "@/lib/utils/alerts/defaultAlert";
 
 interface TimeSlot {
   start: string;
@@ -34,32 +38,48 @@ export default function ResourceDetail({
   const [showError, setShowError] = useState(false);
   const [dateError, setDateError] = useState(false);
   const [resource, setResource] = useState<Resource | null>(null);
+  const [schedule, setSchedule] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const now = new Date();
+  const router = useRouter();
 
-  // Memoize the function to prevent recreation on every render
-  const generateTimeSlots = useCallback((selectedDate: Date) => {
-    const slots: TimeSlot[] = [];
-    const isSaturday = selectedDate.getDay() === 6;
-    const startHour = 6;
-    const endHour = isSaturday ? 15 : 20;
-
-    for (let i = startHour; i < endHour; i++) {
-      if (
-        selectedDate.toDateString() == now.toDateString() &&
-        i <= now.getHours()
-      ) {
-        continue;
-      } else {
-        slots.push({
-          start: `${i}:00`,
-          end: `${i + 1}:00`,
-          selected: false,
-        });
+  const generateTimeSlots = useCallback(
+    (selectedDate: Date) => {
+      if (!schedule) {
+        return [];
       }
-    }
-    return slots;
-  }, []);
+
+      const slots: TimeSlot[] = [];
+      const dayOfWeek = selectedDate.getDay();
+      const daySchedule = schedule.find(
+        (s: any) => s.dayOfWeek + 1 === dayOfWeek
+      );
+
+      if (!daySchedule) {
+        return slots;
+      }
+
+      const startHour = parseInt(daySchedule.startTime.split(":")[0], 10);
+      const endHour = parseInt(daySchedule.endTime.split(":")[0], 10);
+
+      for (let i = startHour; i < endHour; i++) {
+        if (
+          selectedDate.toDateString() == now.toDateString() &&
+          i <= now.getHours()
+        ) {
+          continue;
+        } else {
+          slots.push({
+            start: `${i}:00`,
+            end: `${i + 1}:00`,
+            selected: false,
+          });
+        }
+      }
+      return slots;
+    },
+    [schedule, now]
+  );
 
   useEffect(() => {
     const fetchResource = async () => {
@@ -67,8 +87,12 @@ export default function ResourceDetail({
         const resourceObtained = await getResourceSlugAction({
           slug: params.slug,
         });
-        console.log(resourceObtained);
         setResource(resourceObtained);
+
+        const resourceType = await getResourceTypeAction({
+          id: resourceObtained.resource_type.id.toString(),
+        });
+        setSchedule(resourceType.data.attributes.schedule);
       } catch (error) {
         console.error("Error fetching resources:", error);
         setResource(null);
@@ -130,12 +154,43 @@ export default function ResourceDetail({
     );
 
     if (reservation) {
-    } else {
+      const selectedSlots = timeSlots.filter((slot) => slot.selected);
+
+      try {
+        // Start transaction
+        const transaction = [];
+
+        for (const slot of selectedSlots) {
+          const startTime = new Date(date);
+          const [startHour, startMinute] = slot.start.split(":").map(Number);
+          startTime.setHours(startHour, startMinute, 0, 0);
+
+          const endTime = new Date(date);
+          const [endHour, endMinute] = slot.end.split(":").map(Number);
+          endTime.setHours(endHour, endMinute, 0, 0);
+
+          const reservation = await postReservationService({
+            startTime: startTime.toISOString(),
+            endTime: endTime.toISOString(),
+            resource: resource?.id.toString() || "",
+            user: "1",
+          });
+
+          transaction.push(reservation);
+        }
+
+        await defaultAlert(
+          "Éxito",
+          "Reserva realizada con éxito",
+          "success"
+        ).then(() => {
+          router.push("/dashboard");
+        });
+      } catch (error) {
+        defaultAlert("Error", "No se pudo realizar la reserva", "error");
+        console.error("Error during reservation:", error);
+      }
     }
-    console.log("Reserving resource:", {
-      date: date,
-      timeSlots: timeSlots.filter((slot) => slot.selected),
-    });
   };
 
   if (!resource && loading) {

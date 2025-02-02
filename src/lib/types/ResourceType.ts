@@ -5,4 +5,5 @@ export interface ResourceTypes {
     name: string;
     description: string;
     is_active: boolean;
+    data: any;
 }
