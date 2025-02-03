@@ -40,6 +40,7 @@ export default function ResourceDetail({
   const [resource, setResource] = useState<Resource | null>(null);
   const [schedule, setSchedule] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingReservation, setLoadingReservation] = useState<boolean>(false);
   const now = new Date();
   const router = useRouter();
 
@@ -154,8 +155,8 @@ export default function ResourceDetail({
     );
 
     if (reservation) {
+      setLoadingReservation(true);
       const selectedSlots = timeSlots.filter((slot) => slot.selected);
-
       try {
         // Start transaction
         const transaction = [];
@@ -178,7 +179,7 @@ export default function ResourceDetail({
 
           transaction.push(reservation);
         }
-
+        setLoadingReservation(false);
         await defaultAlert(
           "Éxito",
           "Reserva realizada con éxito",
@@ -198,6 +199,15 @@ export default function ResourceDetail({
       <div className="flex flex-col justify-center items-center animate-pulse">
         <LuLoader2 size={26} className="mr-2 text-black/50 animate-spin mb-5" />
         <p className="text-black/80">Cargando información del recurso...</p>
+      </div>
+    );
+  }
+  
+  if (loadingReservation) {
+    return (
+      <div className="flex flex-col justify-center items-center animate-pulse">
+        <LuLoader2 size={26} className="mr-2 text-black/50 animate-spin mb-5" />
+        <p className="text-black/80">Realizando reserva...</p>
       </div>
     );
   }
