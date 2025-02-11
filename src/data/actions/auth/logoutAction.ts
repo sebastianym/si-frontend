@@ -6,5 +6,5 @@ import { redirect } from "next/navigation";
 
 export async function logoutAction() {
 	cookies().set("jwt", "", { ...config, maxAge: 0 });
-	redirect("/");
+	redirect("/iniciar-sesion");
   }

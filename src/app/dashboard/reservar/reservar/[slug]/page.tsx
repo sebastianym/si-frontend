@@ -21,6 +21,7 @@ import getResourceTypeAction from "@/data/actions/resources/getResourceTypeActio
 import { postReservationService } from "@/data/services/reservations/postReservationService";
 import { useRouter } from "next/navigation";
 import { defaultAlert } from "@/lib/utils/alerts/defaultAlert";
+import { getUserMeLoader } from "@/data/services/get-user-me-loader";
 
 interface TimeSlot {
   start: string;
@@ -43,12 +44,15 @@ export default function ResourceDetail({
   const [reservations, setReservations] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingReservation, setLoadingReservation] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const router = useRouter();
 
   // Obtiene la información del recurso, su tipo (para el horario) y las reservas existentes
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const user = await getUserMeLoader();
+        setUserId(user.data.id);
         const resourceObtained = await getResourceSlugAction({
           slug: params.slug,
         });
@@ -190,7 +194,7 @@ export default function ResourceDetail({
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
             resource: resource?.id.toString() || "",
-            user: "1",
+            user: userId || "",
           });
         }
         await defaultAlert("Éxito", "Reserva realizada con éxito", "success");

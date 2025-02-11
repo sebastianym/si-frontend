@@ -10,8 +10,6 @@ export async function getUserMeLoader() {
 	const baseUrl = getStrapiURL();
 
 	const url = new URL("/api/users/me?populate=*", baseUrl);
-	url.search = query;
-
 	const authToken = await getAuthToken();
 	if (!authToken) return { ok: false, data: null, error: null };
 
