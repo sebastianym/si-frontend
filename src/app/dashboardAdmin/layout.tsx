@@ -85,15 +85,15 @@ export default function DashboardLayout({
             <div className="flex items-center gap-9">
               <Link
                 className="text-[#111418] text-sm font-medium leading-normal"
-                href="/dashboard"
+                href="/dashboardAdmin/recursos"
               >
-                Dashboard
+                Recursos
               </Link>
               <a
                 className="text-[#111418] text-sm font-medium leading-normal"
-                href="/dashboard/mis-reservaciones"
+                href="/dashboardAdmin/reservaciones"
               >
-                Mis reservaciones
+                Reservas
               </a>
               <Link
                 className="text-[#111418] text-sm font-medium leading-normal"
@@ -131,7 +131,7 @@ export default function DashboardLayout({
               <ul className="space-y-2 font-medium">
                 <li>
                   <a
-                    href="/dashboard"
+                    href="/dashboardAdmin/recursos"
                     className="flex items-center p-2 rounded-lg text-black/60 hover:bg-gray/10"
                   >
                     <MdSpaceDashboard className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-black/60" />
@@ -140,11 +140,11 @@ export default function DashboardLayout({
                 </li>
                 <li>
                   <a
-                    href="/dashboard/mis-reservaciones"
+                    href="/dashboardAdmin/reservaciones"
                     className="flex items-center p-2 rounded-lg text-black/60 hover:bg-gray/10"
                   >
-                    <IoIosCheckboxOutline className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-black/60" />
-                    <span className="ms-4 whitespace-nowrap">Mis reservas</span>
+                    <FaBookOpen className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-black/60" />
+                    <span className="ms-4 whitespace-nowrap">Reservas</span>
                   </a>
                 </li>
                 <li>

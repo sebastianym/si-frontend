@@ -4,7 +4,7 @@ import { getAuthToken } from "../get-token";
 const baseUrl = getStrapiURL();
 
 export async function getReservationsService() {
-  const url = new URL("/api/reservations", baseUrl);
+  const url = new URL("/api/reservations?populate=*", baseUrl);
 
   const authToken = await getAuthToken();
 

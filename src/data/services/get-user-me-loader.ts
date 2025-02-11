@@ -9,7 +9,7 @@ const query = qs.stringify({
 export async function getUserMeLoader() {
 	const baseUrl = getStrapiURL();
 
-	const url = new URL("/api/users/me", baseUrl);
+	const url = new URL("/api/users/me?populate=*", baseUrl);
 	url.search = query;
 
 	const authToken = await getAuthToken();
