@@ -38,7 +38,7 @@ interface Resource {
   location: string;
   is_active: boolean;
   slug: string;
-  identifier:string
+  identifier: string;
 }
 
 export default function AdminDashboard() {
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
     name: "",
     description: "",
     is_active: true,
-    identifier:""
+    identifier: "",
   });
 
   // Función para cargar los recursos desde el backend
@@ -87,14 +87,14 @@ export default function AdminDashboard() {
         name: editingResource.name,
         description: editingResource.description,
         is_active: editingResource.is_active,
-        identifier:editingResource.identifier
+        identifier: editingResource.identifier,
       });
     } else {
       setFormData({
         name: "",
         description: "",
         is_active: true,
-        identifier:""
+        identifier: "",
       });
     }
   }, [editingResource]);
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
       image: "/placeholder.svg", // Valor por defecto
       is_active: formData.is_active,
       slug: formData.name.toLowerCase().replace(/\s+/g, "-"),
-      identifier:formData.identifier
+      identifier: formData.identifier,
     };
 
     console.log(resourceData);
@@ -297,13 +297,8 @@ export default function AdminDashboard() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleEdit(resource)}>
-                        Editar
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="text-red-600"
-                        onClick={() => handleDelete(resource.id)}
-                      >
+                      <DropdownMenuItem>Editar</DropdownMenuItem>
+                      <DropdownMenuItem className="text-red-600">
                         Eliminar
                       </DropdownMenuItem>
                     </DropdownMenuContent>
