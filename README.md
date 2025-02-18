@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# **Sistema de Préstamo de Equipos**
 
-## Getting Started
+## Descripción
 
-First, run the development server:
+Este proyecto corresponde al desarrollo de un **frontend** para un sistema de **préstamo de equipos** realizado como parte de la materia **Seminario de Ingeniería** de la **Universidad Distrital Francisco José de Caldas**. El sistema permite gestionar el préstamo de equipos a estudiantes y profesores, facilitando la administración de los equipos disponibles, así como el control de los préstamos y devoluciones.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El proyecto fue desarrollado en colaboración con mi compañero **Santiago Barón Zuleta**, con el objetivo de aplicar los conocimientos adquiridos en el curso y construir una solución práctica para la gestión de equipos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologías utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Next.js**: Framework React para la construcción de interfaces de usuario y la optimización del rendimiento.
+- **ShadCN**: Componentes UI para un diseño elegante y fácil de usar.
+- **NextUI**: Framework de diseño para Next.js con componentes modernos y responsivos.
+- **React**: Biblioteca de JavaScript para la construcción de interfaces de usuario interactivas.
+- **Tailwind CSS**: Para el estilo y el diseño de la aplicación.
+  
+Además, el sistema está conectado a un **backend** alojado en Render, utilizando **Strapi** como CMS para la gestión de datos y la lógica del servidor.
 
-## Learn More
+## Instalación
 
-To learn more about Next.js, take a look at the following resources:
+Para ejecutar este proyecto en tu máquina local, sigue estos pasos:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clona el repositorio en tu máquina local:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  ```bash
+  git clone https://github.com/sebastianym/si-frontend.git
+  ```
 
-## Deploy on Vercel
+2. Instala las dependencias y ejecuta el proyecto::
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  ```bash
+  npm install
+  npm run dev
+  ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Una vez iniciado, el servidor se ejecutará en http://localhost:3000.
+
+## Backend
+El backend está alojado en Render y utiliza Strapi para gestionar los datos del sistema. Puedes acceder a la API del backend en la siguiente URL:
+
+## Backend (API): si-strapi-backend.onrender.com
+Este backend se encarga de gestionar el almacenamiento de equipos, usuarios y registros de préstamos, proporcionando la funcionalidad necesaria para el sistema de frontend.
+
+## Capturas de pantalla
+Algunas capturas de pantalla del proyecto 
+
+![image](https://github.com/user-attachments/assets/0576f3db-5fa1-48d3-a250-13ddbb9b871f)
+
+![image](https://github.com/user-attachments/assets/ee6a9be4-d6fa-43f2-863f-8b91fd0925ea)
+
+![image](https://github.com/user-attachments/assets/1d7045a5-edb2-4ad2-8d14-598a1e2ea4ce)
+
+![image](https://github.com/user-attachments/assets/216c61e3-f981-4a7f-bc95-0f45c81d255c)
+
+
+## Colaboradores
+
+Santiago Barón: Responsable de la estructura del proyecto, login, gestión de recursos.
+
+Sebastián Yepes: Encargado de implementar las reservas, menú de reservas, módulo empleados.
+
+
